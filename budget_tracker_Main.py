@@ -69,12 +69,26 @@ st.write(f"### Total Expenses: £{total_expenses:,.2f}")
 st.write(f"### Remaining Savings: £{remaining_balance:,.2f}")
 
 # Pie chart visualization
+# if total_expenses > 0:
+#     st.subheader("Expense Breakdown")
+#     expense_data = {k: float(v) for k, v in expenses.items() if v.strip()}
+#
+#     fig, ax = plt.subplots()
+#     ax.pie(expense_data.values(), labels=expense_data.keys(), autopct="%1.1f%%", startangle=90)
+#     ax.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle
+#     st.pyplot(fig)
+
+# Bar chart visualization
 if total_expenses > 0:
     st.subheader("Expense Breakdown")
     expense_data = {k: float(v) for k, v in expenses.items() if v.strip()}
     
-    fig, ax = plt.subplots()
-    ax.pie(expense_data.values(), labels=expense_data.keys(), autopct="%1.1f%%", startangle=90)
-    ax.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle
+    # Sort expense data by value for better visualization
+    sorted_expenses = dict(sorted(expense_data.items(), key=lambda item: item[1], reverse=True))
+    
+    # Create bar chart
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.barh(list(sorted_expenses.keys()), list(sorted_expenses.values()), color='skyblue')
+    ax.set_xlabel('Amount (£)')
+    ax.set_title('Monthly Expense Breakdown')
     st.pyplot(fig)
-
